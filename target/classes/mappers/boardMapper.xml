@@ -5,4 +5,9 @@
 
 <mapper namespace="com.itwillbs.mapper.BoardMapper">
 
+	<insert id="insertBoard" >
+		insert into tbl_board (title, writer, content)
+		values (#{title}, #{writer}, #{content})
+		
+	</insert>
 </mapper>
