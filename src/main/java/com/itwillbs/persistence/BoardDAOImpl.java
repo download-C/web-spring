@@ -30,7 +30,22 @@ public class BoardDAOImpl implements BoardDAO{
 	@Override
 	public List<BoardVO> getListAll() throws Exception{
 		log.info("DAO - getListAll() 호출");
+		
+		List<BoardVO> boardList = session.selectList(NAMESPACE+".getListAll");
+		
+//		log.info(boardList+"");
+		log.info(boardList.size()+"");
+//		return null;
 		return session.selectList(NAMESPACE+".getListAll");
+	}
+
+	@Override
+	public BoardVO getBoard(Integer bno) throws Exception {
+		log.info("dao - getBoard(bno) 호출");
+		BoardVO vo = session.selectOne(NAMESPACE+".getBoard", bno);
+		log.info(vo+"");
+		
+		return session.selectOne(NAMESPACE+".getBoard", bno);
 	}
 	
 

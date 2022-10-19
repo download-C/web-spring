@@ -30,6 +30,13 @@ public class BoardServiceImpl implements BoardService{
 		return dao.getListAll();
 	}
 
+	@Override
+	public BoardVO getBoard(Integer bno) throws Exception {
+		log.info("service - getBoard() 호출");
+		
+		return dao.getBoard(bno);
+	}
+
 
 
 }

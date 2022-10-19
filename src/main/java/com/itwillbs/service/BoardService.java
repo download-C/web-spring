@@ -10,4 +10,7 @@ public interface BoardService {
 
 	public List<BoardVO> getListAll() throws Exception;
 
+	public BoardVO getBoard(Integer bno) throws Exception;
+
+
 }

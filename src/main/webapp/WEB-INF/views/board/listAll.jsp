@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+ 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page session="false"%>
 
 <%@ include file="../include/header.jsp"%>
@@ -15,7 +16,7 @@
 <h1>board/listAll.jsp</h1>
 <div class="box">
 	<div class="box-header">
-		<h3 class="box-title">Responsive Hover Table</h3>
+		<h3 class="box-title">게시글</h3>
 		<div class="box-tools">
 			<div class="input-group input-group-sm hidden-xs"
 				style="width: 150px;">
@@ -40,18 +41,22 @@
 					<th style="width:45px; text-align:center">조회수</th>
 					<th style="width:100px; text-align:center">작성일</th>
 				</tr>
-				<c:forEach var="i" begin="1" end="5" step="1">
+				<c:forEach var="vo" begin="1" end="5" step="1" items="${boardList }">
 				<tr>
-					<th style="width:45px; text-align:center">bno</th>
-					<th style="width:200px; text-align:center" >title</th>
-					<th style="width:100px; text-align:center">writer</th>
-					<th style="width:45px; text-align:center">readcount</th>
-					<th style="width:100px; text-align:center">regdate</th>
+					<th style="width:45px; text-align:center">${vo.bno }</th>
+					<th style="width:200px; text-align:center" >
+						<a href="${pageContext.request.contextPath}/board/content?bno=${vo.bno }">${vo.title }</a>
+					</th>
+					<th style="width:100px; text-align:center">${vo.writer}</th>
+					<th style="width:45px; text-align:center">${vo.readcount}</th>
+					<th style="width:100px; text-align:center">
+						<fmt:formatDate value="${vo.regdate}" pattern="yyyy.MM.dd HH:mm"/> 
+					</th>
 				</tr>
 				</c:forEach>
 			</tbody>
 		</table>
-		<div class="box-footer clearfix">
+		<div class="box-footer clearfix" style="margin: auto;">
 			<ul class="pagination pagination-sm no-margin pull-right">
 				<li><a href="#">«</a></li>
 					<li><a href="#">i</a></li>

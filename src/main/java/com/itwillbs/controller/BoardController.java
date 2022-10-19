@@ -5,6 +5,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import java.util.List;
 
 import javax.inject.Inject;
+import javax.servlet.http.HttpServletRequest;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,6 +14,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.itwillbs.domain.BoardVO;
@@ -70,7 +72,21 @@ public class BoardController {
 		
 		// 글 전체 목록 가져오기
 		List<BoardVO> boardList = service.getListAll();
+		model.addAttribute("boardList", boardList);
 		
 		return "/board/listAll";
+	}
+	
+	// http://localhost:8088/board/content?bno=3
+	@RequestMapping(value = "/content", method = RequestMethod.GET)
+	public void contentGET(@RequestParam("bno") int bno, Model model) throws Exception {
+		log.info("controller - readGET() 호출");
+		log.info("bno : "+bno);
+		
+		BoardVO vo = service.getBoard(bno);
+		model.addAttribute("vo", vo);
+		
+		log.info("/board/content -> content.jsp");
+
 	}
 }
