@@ -1,12 +1,19 @@
 package com.itwillbs.controller;
 
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.flash;
+
+import java.util.List;
+
 import javax.inject.Inject;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.itwillbs.domain.BoardVO;
 import com.itwillbs.service.BoardService;
@@ -40,27 +47,30 @@ public class BoardController {
 	// 글쓰기 POST 작성한 글 DB에 저장
 	// http://localhost:8088/board/regist
 	@RequestMapping(value = "/regist", method = RequestMethod.POST)
-	public String gesisterPOST(BoardVO vo) throws Exception{
+	public String gesisterPOST(BoardVO vo, RedirectAttributes rttr /*Model model*/) throws Exception{
 		log.info("*****BoardController - gesisterPOST() 호출");
 		
 		// 뷰에서 입력한 정보 받아오기 -> bno는 AutoIncreasemnet가 걸려있어서 따로 처리할 필요 X
 		log.info("작성된 글: "+vo);
 		
 		service.boardWrite(vo);
+//		model.addAttribute("msg", "OK");
+		rttr.addFlashAttribute("msg", "OK"); // 한 번만 써지고 사라짐.
 		log.info("글쓰기 완료!");
-
-
 		
-//		service.
-		return "/board/list";
+		return "redirect:/board/listAll";
 	}
 	
 	// DB에서 글 정보 가져와서 view에 출력
-	// http://localhost:8088/board/list
-	@RequestMapping(value = "/list", method = RequestMethod.GET)
-	public String listGET() throws Exception{
-		log.info("*****BoardController - listGET() 호출");
-//		service.
-		return "/board/list";
+	// http://localhost:8088/board/listAll
+	@RequestMapping(value = "/listAll", method = RequestMethod.GET)
+	public String listAllGET(@ModelAttribute("msg") String msg, Model model) throws Exception{
+		log.info("*****BoardController - listAllGET() 호출");
+		log.info("msg: "+msg);
+		
+		// 글 전체 목록 가져오기
+		List<BoardVO> boardList = service.getListAll();
+		
+		return "/board/listAll";
 	}
 }

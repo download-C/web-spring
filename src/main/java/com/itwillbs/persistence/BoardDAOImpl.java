@@ -1,5 +1,7 @@
 package com.itwillbs.persistence;
 
+import java.util.List;
+
 import javax.inject.Inject;
 
 import org.apache.ibatis.session.SqlSession;
@@ -20,9 +22,15 @@ public class BoardDAOImpl implements BoardDAO{
 	private static final Logger log = LoggerFactory.getLogger(BoardDAOImpl.class);
 
 	@Override
-	public void boardWrite(BoardVO vo) {
+	public void boardWrite(BoardVO vo) throws Exception{
 		log.info("DAO insertBoard(vo) 호출");
 		session.insert(NAMESPACE+".insertBoard",vo);
+	}
+
+	@Override
+	public List<BoardVO> getListAll() throws Exception{
+		log.info("DAO - getListAll() 호출");
+		return session.selectList(NAMESPACE+".getListAll");
 	}
 	
 
