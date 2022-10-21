@@ -8,26 +8,16 @@
 <!-- ${pageContext.request.contextPath} -->
 <h1>board/content.jsp</h1>
 
-<div class="box">
-	<div class="box-header">
-		<h3 class="box-title">내용</h3>
-		<div class="box-tools"></div>
-	</div>
-
-	<div class="box box-primary">
-		<div class="box-header with-border">
-			<h3 class="box-title">Quick Example</h3>
-		</div>
-
-
-
-			<div class="box box-warning">
+<div class="box box-warning">
 	<div class="box-header with-border">
-		<h3 class="box-title">ITWIIL 게시판</h3>
+		<h3 class="box-title">ITWIIL 게시판 본문</h3>
 	</div>
+	<!-- 수정 및 삭제 시 필요한 글번호 저장 -->
+	<form role="form" method="post">
+		<input type="hidden" name="bno" value=${vo.bno }>
+	</form>
 
 	<div class="box-body">
-		<form role="form" action="/board/regist" method="post">
 
 			<div class="form-group">
 				<label>제목</label> <input type="text" class="form-control"
@@ -40,16 +30,55 @@
 
 			<div class="form-group">
 				<label>내용</label>
-				<textarea class="form-control" rows="3" 
-				 name="content" readonly="readonly">${vo.content }</textarea>
+				<textarea class="form-control" rows="3" name="content"
+					readonly="readonly">${vo.content }</textarea>
 			</div>
 			<div class="box-footer">
-				<button type="submit" class="btn btn-primary">수정하기</button>
+				<button type="submit" class="btn btn-warning">수정</button>
+				<button type="submit" class="btn btn-danger">삭제</button>
+				<button type="submit" class="btn btn-success">목록</button>
 			</div>
-		</form>
-	</div>
+	</div>	
 </div>
 
-</div>
+<script type="text/javascript">
+	
+	$(document).ready(function(){
+// 		alert('제이쿼리 실행');
 
-<%@ include file="../include/footer.jsp"%>
+		// 글 정보 포함하는 form 태그 변수 선언
+		var form = $('form[role="form"]');
+// 		console.log(form);
+		
+		// 1. 수정버튼 클릭 시 기능 설정
+		$(".btn-warning").click(function(){
+// 			alert('수정 버튼 클릭');	
+			// 버튼 클릭 시 action 속성 설정해서 경로 지정
+			form.attr("action", "/board/modify");
+			//버튼 클릭 시 method=get으로 설정하기
+			form.attr("method","get");
+			// form태그  submit하기
+			form.submit();
+		});
+		
+		// 2. 삭제 버튼 클릭 시 글 삭제
+		$(".btn-danger").click(function(){
+// 			alert('삭제 버튼 클릭');
+			// 버튼 클릭 시 action 속성 설정해서 경로 지정
+			form.attr("action", "/board/delete");
+			//버튼 클릭 시 method=get으로 설정하기
+			form.attr("method","get");
+			// form태그  submit하기
+			form.submit();
+		});
+		
+		// 3. 목록 버튼 클릭 시 게시판 목록으로 이동
+		$(".btn-success").click(function(){
+			location.href="/board/listAll";
+		});
+		
+	});
+</script>
+
+
+	<%@ include file="../include/footer.jsp"%>

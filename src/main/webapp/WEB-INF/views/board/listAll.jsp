@@ -14,6 +14,9 @@
 </script>
 
 <h1>board/listAll.jsp</h1>
+<button class="btn btn-primary" 
+		onclick="location.href='${pageContext.request.contextPath}/board/regist'">
+		글쓰기</button>
 <div class="box">
 	<div class="box-header">
 		<h3 class="box-title">게시글</h3>
@@ -41,7 +44,7 @@
 					<th style="width:45px; text-align:center">조회수</th>
 					<th style="width:100px; text-align:center">작성일</th>
 				</tr>
-				<c:forEach var="vo" begin="1" end="5" step="1" items="${boardList }">
+				<c:forEach var="vo" begin="0" end="5" step="1" items="${boardList }">
 				<tr>
 					<th style="width:45px; text-align:center">${vo.bno }</th>
 					<th style="width:200px; text-align:center" >

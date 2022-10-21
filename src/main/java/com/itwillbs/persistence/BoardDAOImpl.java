@@ -32,20 +32,43 @@ public class BoardDAOImpl implements BoardDAO{
 		log.info("DAO - getListAll() 호출");
 		
 		List<BoardVO> boardList = session.selectList(NAMESPACE+".getListAll");
-		
 //		log.info(boardList+"");
-		log.info(boardList.size()+"");
-//		return null;
+		log.info("목록 글 개수 :"+boardList.size());
 		return session.selectList(NAMESPACE+".getListAll");
 	}
 
 	@Override
 	public BoardVO getBoard(Integer bno) throws Exception {
-		log.info("dao - getBoard(bno) 호출");
+		log.info("getBoard("+bno+") 호출");
 		BoardVO vo = session.selectOne(NAMESPACE+".getBoard", bno);
 		log.info(vo+"");
 		
 		return session.selectOne(NAMESPACE+".getBoard", bno);
+	}
+
+	@Override
+	public void updateReadcount(Integer bno) throws Exception {
+		log.info("updateReadcount(bno) 호출");
+		
+		log.info("bno: "+bno);
+		
+		session.update(NAMESPACE+".updateReadcount", bno);	
+		log.info(bno+"번 글 조회수 1 증가");
+		
+	}
+
+	@Override
+	public Integer updateBoard(BoardVO vo) throws Exception {
+		log.info("updateBoard(vo) 호출");
+		int result = session.update(NAMESPACE+".updateBoard", vo);
+		return result;
+	}
+
+	@Override
+	public void deleteBoard(int bno) throws Exception {
+		log.info("deleteBoard(bno) 호출");
+		session.delete(NAMESPACE+".deleteBoard", bno);
+		
 	}
 	
 

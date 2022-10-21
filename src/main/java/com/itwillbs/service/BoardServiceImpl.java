@@ -37,6 +37,23 @@ public class BoardServiceImpl implements BoardService{
 		return dao.getBoard(bno);
 	}
 
+	@Override
+	public void updateReadcount(Integer bno) throws Exception {
+		log.info("service - updateReadcount(bno) 호출");
+		
+		dao.updateReadcount(bno);
+	}
 
+	@Override
+	public Integer updateBoard(BoardVO vo) throws Exception {
+		log.info("updateBoard(vo) 호출");
+		int result = dao.updateBoard(vo);
+		return result;
+	}
 
+	@Override
+	public void deleteBoard(int bno) throws Exception {
+		log.info("deleteBoard(bno) 호출");
+		dao.deleteBoard(bno);
+	}
 }
