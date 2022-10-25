@@ -17,5 +17,10 @@ public interface BoardDAO {
 	public Integer updateBoard(BoardVO vo)throws Exception;
 
 	public Integer deleteBoard(int bno) throws Exception;
+	
+	public List<BoardVO> listPage(Integer page) throws Exception;
+	
+	public List<BoardVO> listPage(Integer page, Integer pageSize) throws Exception;
+	
 
 }

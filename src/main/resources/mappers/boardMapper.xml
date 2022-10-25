@@ -41,6 +41,18 @@
 		delete from tbl_board where bno=#{bno} 
 	</delete>
 	
+	<select id="listPage" resultType="BoardVO">
+		select * from tbl_board 
+		order by bno desc, regdate desc 
+		limit #{page}, 10
+	</select>
+	
+	<select id="listPage2" resultType="BoardVO">
+		select * from tbl_board 
+		order by bno desc, regdate desc 
+		limit #{page}, #{pageSize}
+	</select>
+	
 	
 </mapper>
 
