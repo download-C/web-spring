@@ -7,8 +7,8 @@
 
 	<!-- 글쓰기 -->
 	<insert id="insertBoard" >
-		insert into tbl_board (title, writer, content)
-		values (#{title}, #{writer}, #{content})
+		insert into tbl_board (title, writer, content, ip)
+		values (#{title}, #{writer}, #{content}, #{ip})
 	</insert>
 	
 	<!-- 글 목록 조회 -->

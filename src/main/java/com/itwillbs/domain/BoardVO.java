@@ -12,5 +12,6 @@ public class BoardVO {
 	private String writer;
 	private Integer readcount;
 	private Timestamp regdate;
+	private String ip;
 	
 }

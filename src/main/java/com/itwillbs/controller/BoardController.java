@@ -47,12 +47,13 @@ public class BoardController {
 	// 글쓰기 POST 작성한 글 DB에 저장
 	// http://localhost:8088/board/regist
 	@RequestMapping(value = "/regist", method = RequestMethod.POST)
-	public String gesisterPOST(BoardVO vo, RedirectAttributes rttr /*Model model*/) throws Exception{
+	public String gesisterPOST(BoardVO vo, HttpServletRequest request, 
+			RedirectAttributes rttr /*Model model*/) throws Exception{
 		log.info("*****BoardController - gesisterPOST() 호출");
 		
 		// 뷰에서 입력한 정보 받아오기 -> bno는 AutoIncreasemnet가 걸려있어서 따로 처리할 필요 X
 		log.info("작성된 글: "+vo);
-		
+		vo.setIp(request.getRemoteAddr());
 		service.boardWrite(vo);
 //		model.addAttribute("msg", "OK");
 		rttr.addFlashAttribute("msg", "OK"); // 한 번만 써지고 사라짐.
@@ -71,7 +72,7 @@ public class BoardController {
 		
 		// 글 전체 목록 가져오기
 		List<BoardVO> boardList = service.getListAll();
-		log.info(boardList+"");
+//		log.info(boardList+"");
 		model.addAttribute("boardList", boardList);
 		session.setAttribute("isUpdate", false);
 		
@@ -120,7 +121,8 @@ public class BoardController {
 	}
 	
 	@RequestMapping(value="/modify", method = RequestMethod.POST)
-	public String modifyPOST(int bno, HttpServletRequest request) throws Exception{
+	public String modifyPOST(int bno, HttpServletRequest request,
+			RedirectAttributes rttr) throws Exception{
 		log.info("modifyPOST(bno) 호출");
 		
 		// 해당 글의 기존 정보 가져온 뒤 수정할 수 있는 제목과 내용만 받아서 덮어쓰기
@@ -133,19 +135,26 @@ public class BoardController {
 		// 수정된 정보 업데이트
 		int result = service.updateBoard(vo);
 		// 수정 성공 시 목록으로 이동
-		if(result == 1) return "redirect:/board/listAll";
+		if(result == 1) {
+			rttr.addFlashAttribute("msg", "MODOK");
+			return "redirect:/board/listAll";
 		// 수정 실패 시 해당 게시글 수정 페이지로 이동
-		else {
+		} else {
 //			new NullPointerException();
 			return "/board/modify?bno="+bno;
 		}
 	}
 	
-	@RequestMapping(value="/delete", method = RequestMethod.GET)
-	public void deleteGET(int bno) throws Exception {
+	@RequestMapping(value="/delete", method = RequestMethod.POST)
+	public String deleteGET(int bno, RedirectAttributes rttr) throws Exception {
 		log.info("deleteGET(bno) 호출");
-		
-		service.deleteBoard(bno);
-		
+		                                                                                               
+		int result = service.deleteBoard(bno);
+		if(result == 1) {
+			rttr.addFlashAttribute("msg", "DELOK");
+		}
+
+		return "redirect:/board/listAll";
 	}
 }
+ 

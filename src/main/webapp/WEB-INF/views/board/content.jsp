@@ -6,7 +6,7 @@
 
 <%@ include file="../include/header.jsp"%>
 <!-- ${pageContext.request.contextPath} -->
-<h1>board/content.jsp</h1>
+<h1>board/content.jsp	</h1>
 
 <div class="box box-warning">
 	<div class="box-header with-border">
@@ -63,11 +63,10 @@
 		
 		// 2. 삭제 버튼 클릭 시 글 삭제
 		$(".btn-danger").click(function(){
-// 			alert('삭제 버튼 클릭');
+// 			alert('저런, 삭제하시려구요?');
+// 			alert('안 돼요, 안 돼!');
 			// 버튼 클릭 시 action 속성 설정해서 경로 지정
 			form.attr("action", "/board/delete");
-			//버튼 클릭 시 method=get으로 설정하기
-			form.attr("method","get");
 			// form태그  submit하기
 			form.submit();
 		});

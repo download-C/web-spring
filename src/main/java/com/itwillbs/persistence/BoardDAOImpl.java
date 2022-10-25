@@ -41,7 +41,7 @@ public class BoardDAOImpl implements BoardDAO{
 	public BoardVO getBoard(Integer bno) throws Exception {
 		log.info("getBoard("+bno+") 호출");
 		BoardVO vo = session.selectOne(NAMESPACE+".getBoard", bno);
-		log.info(vo+"");
+//		log.info(vo+"");
 		
 		return session.selectOne(NAMESPACE+".getBoard", bno);
 	}
@@ -65,9 +65,10 @@ public class BoardDAOImpl implements BoardDAO{
 	}
 
 	@Override
-	public void deleteBoard(int bno) throws Exception {
+	public Integer deleteBoard(int bno) throws Exception {
 		log.info("deleteBoard(bno) 호출");
-		session.delete(NAMESPACE+".deleteBoard", bno);
+		return session.delete(NAMESPACE+".deleteBoard", bno);
+		
 		
 	}
 	
