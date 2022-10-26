@@ -3,6 +3,7 @@ package com.itwillbs.service;
 import java.util.List;
 
 import com.itwillbs.domain.BoardVO;
+import com.itwillbs.domain.PageVO;
 
 public interface BoardService {
 
@@ -16,6 +17,10 @@ public interface BoardService {
 
 	public Integer updateBoard(BoardVO vo) throws Exception;
 
-	public Integer deleteBoard(int bno) throws Exception; 
+	public Integer deleteBoard(int bno) throws Exception;
+
+	public List<BoardVO> getlistPage(PageVO vo) throws Exception;
+
+	public int getTotlaCnt() throws Exception; 
 
 }

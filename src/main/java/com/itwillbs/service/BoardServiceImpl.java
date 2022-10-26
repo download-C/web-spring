@@ -9,6 +9,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import com.itwillbs.domain.BoardVO;
+import com.itwillbs.domain.PageVO;
 import com.itwillbs.persistence.BoardDAO;
 
 @Service
@@ -55,5 +56,15 @@ public class BoardServiceImpl implements BoardService{
 	public Integer deleteBoard(int bno) throws Exception {
 		log.info("deleteBoard(bno) 호출");
 		return dao.deleteBoard(bno);
+	}
+
+	@Override
+	public List<BoardVO> getlistPage(PageVO vo) throws Exception{
+		return dao.listPage(vo);
+	}
+
+	@Override
+	public int getTotlaCnt() throws Exception {
+		return dao.getTotalCnt();
 	}
 }

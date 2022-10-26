@@ -17,8 +17,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.itwillbs.domain.BoardVO;
+import com.itwillbs.domain.PageMakerVO;
+import com.itwillbs.domain.PageVO;
 import com.itwillbs.service.BoardService;
-
 
 @Controller
 @RequestMapping("/board/*") // /board로 시작하는 모든 주소는 BoardController에서 제어
@@ -59,7 +60,7 @@ public class BoardController {
 		rttr.addFlashAttribute("msg", "OK"); // 한 번만 써지고 사라짐.
 		log.info("글쓰기 완료!");
 		
-		return "redirect:/board/listAll";
+		return "redirect:/board/listPage";
 	}
 	
 	// DB에서 글 정보 가져와서 view에 출력
@@ -94,9 +95,9 @@ public class BoardController {
 		
 		// isUpdate 변수에 따라 컨텐츠 페이지에서 새로고침 시 조회수 업데이트 제어하기
 		boolean isUpdate = (boolean)session.getAttribute("isUpdate");
-//		log.info("isUpdate: "+isUpdate);	
+		log.info("isUpdate: "+isUpdate);
+		log.info("isUpdate: "+isUpdate);	
 		if(!isUpdate) {
-
 			service.updateReadcount(bno);
 			// 조회수 1 올린 뒤 true로 바꾸고 세션값으로 저장해서 앞으로 조회수 X 
 			session.setAttribute("isUpdate", true);
@@ -137,7 +138,7 @@ public class BoardController {
 		// 수정 성공 시 목록으로 이동
 		if(result == 1) {
 			rttr.addFlashAttribute("msg", "MODOK");
-			return "redirect:/board/listAll";
+			return "redirect:/board/listPage";
 		// 수정 실패 시 해당 게시글 수정 페이지로 이동
 		} else {
 //			new NullPointerException();
@@ -154,7 +155,29 @@ public class BoardController {
 			rttr.addFlashAttribute("msg", "DELOK");
 		}
 
-		return "redirect:/board/listAll";
+		return "redirect:/board/listPage";
+	}
+	// http://localhost:8088/board/listPage
+	// http://localhost:8088/board/listPage?page=2
+	// http://localhost:8088/board/listPage?page=50&perPageNum=100
+	@RequestMapping(value="/listPage", method = RequestMethod.GET)
+	public String listPageGET(PageVO vo, Model model) throws Exception{
+		// 페이징처리 된 게시판 목록
+		log.info("listPageGET(vo) 호출");
+		
+		model.addAttribute("boardList", service.getlistPage(vo));
+		
+		// 페이징처리 저장하기
+//		vo = new PageVO();
+//		vo.setPage(2);
+//		vo.setPerPageNum(30);
+		PageMakerVO pm = new PageMakerVO();
+		pm.setVo(vo);
+		pm.setTotalCnt(3730);
+		model.addAttribute("pm", pm);
+		log.info("페이징 처리 완료");
+		
+		return "/board/listAll";
 	}
 }
  

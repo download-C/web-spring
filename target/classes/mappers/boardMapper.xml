@@ -19,6 +19,10 @@
 		<result property="content" column="content"/>
 	</resultMap>
 	
+	<select id="getTotalCnt" resultType="java.lang.Integer">
+		select count(*) from tbl_board
+	</select>
+	
 	<!-- 글 정보 조회 -->
 	<select id="getBoard" resultType="BoardVO">
 		select * from tbl_board where bno=#{bno}
@@ -47,10 +51,18 @@
 		limit #{page}, 10
 	</select>
 	
+	<!-- 개발자가 원하는 대로 수정 -->
 	<select id="listPage2" resultType="BoardVO">
 		select * from tbl_board 
 		order by bno desc, regdate desc 
 		limit #{page}, #{pageSize}
+	</select>
+	
+	<!-- 수식 형태로  -->
+	<select id="listPage3" resultType="BoardVO">
+		select * from tbl_board 
+		order by bno desc, regdate desc 
+		limit #{pageStart}, #{perPageNum}
 	</select>
 	
 	

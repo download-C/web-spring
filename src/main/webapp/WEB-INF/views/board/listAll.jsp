@@ -67,15 +67,24 @@
 				</c:forEach>
 			</tbody>
 		</table>
-		<div class="box-footer clearfix" style="margin: auto; text-align:center;">
+		
+		<div class="box-footer clearfix" style="display:flex; justify-content:center;">
 			<ul class="pagination pagination-sm no-margin pull-right">
-				<li><a href="#">«</a></li>
-					<li><a href="#">i</a></li>
-				<li><a href="#">»</a></li>
+				<c:if test="${pm.prev }">
+					<li><a href="listPage?page=${pm.startPage-1 }">&laquo;</a></li>
+				</c:if>
+				<c:forEach var="idx" begin="${pm.startPage }" end="${pm.endPage }">
+					<li <c:out value=""/> >
+						<a href="listPage?page=${idx }">${idx }</a>
+					</li>
+				</c:forEach>
+				<c:if test="${pm.next }">
+					<li ${pm.vo.page == idx?'class=active':'' }><a href="listPage?page=${pm.endPage+1 }">&raquo;</a></li>
+				</c:if>
 			</ul>
 		</div>
 	</div>
-
+	
 </div>
 <%@ include file="../include/footer.jsp"%>
 

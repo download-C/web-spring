@@ -12,10 +12,13 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 
 import com.itwillbs.domain.BoardVO;
+import com.itwillbs.domain.PageVO;
+
+
 
 @Repository
 public class BoardDAOImpl implements BoardDAO{
-	
+
 	@Inject
 	SqlSession session;
 	
@@ -92,6 +95,18 @@ public class BoardDAOImpl implements BoardDAO{
 		
 		return session.selectList(NAMESPACE+".listPage2", pageObj);
 	}
-	
+
+	@Override
+	public List<BoardVO> listPage(PageVO vo) throws Exception {
+		
+		log.info("listPage(vo) 호출");
+		
+		return session.selectList(NAMESPACE+".listPage3", vo);
+	}
+
+	@Override
+	public int getTotalCnt() throws Exception {
+		return session.selectOne(NAMESPACE+".getTotalCnt");
+	}
 
 }

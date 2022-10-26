@@ -3,6 +3,7 @@ package com.itwillbs.persistence;
 import java.util.List;
 
 import com.itwillbs.domain.BoardVO;
+import com.itwillbs.domain.PageVO;
 
 public interface BoardDAO {
 	
@@ -22,5 +23,8 @@ public interface BoardDAO {
 	
 	public List<BoardVO> listPage(Integer page, Integer pageSize) throws Exception;
 	
+	public List<BoardVO> listPage(PageVO vo) throws Exception;
+
+	public int getTotalCnt() throws Exception;
 
 }
